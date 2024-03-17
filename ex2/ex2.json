@@ -1,0 +1,46 @@
+[
+    {
+        "idAula": 1,
+        "professor": "Jonas",
+        "assunto": "bd2",
+        "alunos": [
+            "Jubiscreu",
+            "Fulano",
+            "Ciclano",
+            "Wanderson Knup"
+          ]
+    },
+    {
+        "idAula": 2,
+        "professor": "Marcelo",
+        "assunto": "paradigmas",
+        "alunos": [
+            "Janderson",
+            "Wóshintu",
+            "John Lenon",
+            "Michael Jackson"
+          ]
+    },
+    {
+        "idAula": 3,
+        "professor": "Jonas",
+        "assunto": "dsa3",
+        "alunos": [
+            "Styfler",
+            "Zé da Manga",
+            "Joel",
+            "João"
+          ]
+    },
+    {
+        "idAula": 4,
+        "professor": "Ynogutti",
+        "assunto": "probabilidade",
+        "alunos": [
+            "Jojo",
+            "Valval",
+            "Guigui",
+            "Juju"
+          ]
+    }
+    ]
