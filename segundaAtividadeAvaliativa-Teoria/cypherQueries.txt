@@ -1,0 +1,62 @@
+CREATE(:Pessoa:Agricultor{nome:'Isaura',idade:75,sexo:'F'})-[:PARCEIRO_DE]->(:Pessoa:Vendedor{nome:'Paulo',idade:60,sexo:'M'})
+
+CREATE(:Pessoa:Vendedor{nome:'Valmir',idade:60,sexo:'M'})
+
+MATCH (a:Pessoa:Vendedor{nome:'Valmir',idade:60,sexo:'M'}), (b:Pessoa:Agricultor{nome:'Isaura',idade:75,sexo:'F'})
+CREATE (a)-[:FILHO_DE]->(b)
+
+MATCH (a:Pessoa:Vendedor{nome:'Valmir',idade:60,sexo:'M'}), (b:Pessoa:Vendedor{nome:'Paulo',idade:60,sexo:'M'})
+CREATE (a)-[:FILHO_DE]->(b)
+
+CREATE(:Pessoa:Diarista{nome:'Maiesse',idade:85,sexo:'F'})-[:PARCEIRO_DE]->(:Pessoa:Caminhoneiro{nome:'José',idade:90,sexo:'M'})
+
+CREATE(:Pessoa:Empilhadeirista{nome:'Rossemi',idade:59,sexo:'F'})
+
+MATCH (a:Pessoa:Empilhadeirista{nome:'Rossemi',idade:59,sexo:'F'}), (b:Pessoa:Diarista{nome:'Maiesse',idade:85,sexo:'F'})
+CREATE (a)-[:FILHO_DE]->(b)
+
+MATCH (a:Pessoa:Empilhadeirista{nome:'Rossemi',idade:59,sexo:'F'}), (b:Pessoa:Caminhoneiro{nome:'José',idade:90,sexo:'M'})
+CREATE (a)-[:FILHO_DE]->(b)
+
+MATCH (a:Pessoa:Empilhadeirista{nome:'Rossemi',idade:59,sexo:'F'}), (b:Pessoa:Vendedor{nome:'Valmir',idade:60,sexo:'M'})
+CREATE (a)-[:PARCEIRO_DE]->(b)
+
+CREATE(:Pessoa:Estudante{nome:'Alexandre',idade:20,sexo:'M'})-[:IRMAO_DE{tipo: 'mais novo'}]->(:Pessoa:Vendedor{nome:'Fernando',idade:32,sexo:'M'})
+
+CREATE(:Pessoa:Desenvolvedor{nome:'Felipe',idade:32,sexo:'M'})
+
+MATCH (a:Pessoa:Desenvolvedor{nome:'Felipe',idade:32,sexo:'M'}), (b:Pessoa:Vendedor{nome:'Fernando',idade:32,sexo:'M'})
+CREATE (a)-[:IRMAO_DE{tipo: 'gemeo'}]->(b)
+
+MATCH (a:Pessoa:Desenvolvedor{nome:'Felipe',idade:32,sexo:'M'}), (b:Pessoa:Estudante{nome:'Alexandre',idade:20,sexo:'M'})
+CREATE (a)-[:IRMAO_DE{tipo: 'mais velho'}]->(b)
+
+MATCH (a:Pessoa:Desenvolvedor{nome:'Felipe',idade:32,sexo:'M'})
+MATCH (b:Pessoa:Estudante{nome:'Alexandre',idade:20,sexo:'M'})
+MATCH (c:Pessoa:Vendedor{nome:'Fernando',idade:32,sexo:'M'})
+MATCH (d:Pessoa:Empilhadeirista{nome:'Rossemi',idade:59,sexo:'F'})
+MATCH (e:Pessoa:Vendedor{nome:'Valmir',idade:60,sexo:'M'})
+CREATE (a)-[:FILHO_DE]->(e)
+CREATE (a)-[:FILHO_DE]->(d)
+CREATE (b)-[:FILHO_DE]->(e)
+CREATE (b)-[:FILHO_DE]->(d)
+CREATE (c)-[:FILHO_DE]->(e)
+CREATE (c)-[:FILHO_DE]->(d)
+
+CREATE(:Pessoa:Caminhoneiro{nome:'Zézinho',idade:68,sexo:'M'})
+
+MATCH (felipe:Pessoa:Desenvolvedor{nome:'Felipe',idade:32,sexo:'M'})
+MATCH (alexandre:Pessoa:Estudante{nome:'Alexandre',idade:20,sexo:'M'})
+MATCH (fernando:Pessoa:Vendedor{nome:'Fernando',idade:32,sexo:'M'})
+MATCH (rossemi:Pessoa:Empilhadeirista{nome:'Rossemi',idade:59,sexo:'F'})
+MATCH (zezinho:Pessoa:Caminhoneiro{nome:'Zézinho',idade:68,sexo:'M'})
+MATCH (maiesse:Pessoa:Diarista{nome:'Maiesse',idade:85,sexo:'F'})
+MATCH (jose:Pessoa:Caminhoneiro{nome:'José',idade:90,sexo:'M'})
+CREATE (zezinho)-[:TIO_DE]->(felipe)
+CREATE (zezinho)-[:TIO_DE]->(fernando)
+CREATE (zezinho)-[:TIO_DE]->(alexandre)
+CREATE (zezinho)-[:IRMAO_DE{tipo: 'mais velho'}]->(rossemi)
+CREATE (zezinho)-[:FILHO_DE]->(maiesse)
+CREATE (zezinho)-[:FILHO_DE]->(jose)
+
+
