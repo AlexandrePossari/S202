@@ -38,27 +38,82 @@ def get_amount_data(tx):
         print("{query} raised an error: \n {exception}".format(query=query, exception=exception))
  
         raise
+
+
+def get_vendedores(tx):
+    query = """
+        MATCH (n:Pessoa:Vendedor) RETURN n;
+    """
+    try:
+        result = tx.run(query)
+        print(result)
+        return result
  
-uri = ""
-user = ""
-password = ""
+    except ServiceUnavailable as exception:
  
+        print("{query} raised an error: \n {exception}".format(query=query, exception=exception))
+ 
+        raise
+
+def get_filho_de_quem(tx, filho):
+    query = """
+        MATCH ({nome:"$filho"})-[:FILHO_DE]->(p) RETURN p;
+    """
+    try:
+        result = tx.run(query.replace("$filho", filho))
+        print(result)
+        return result
+ 
+    except ServiceUnavailable as exception:
+ 
+        print("{query} raised an error: \n {exception}".format(query=query, exception=exception))
+ 
+        raise
+
+def get_irmao_de(tx):
+    query = """
+        MATCH p=()-[:IRMAO_DE]->() RETURN p;
+    """
+    try:
+        result = tx.run(query)
+        print(result)
+        return result
+ 
+    except ServiceUnavailable as exception:
+ 
+        print("{query} raised an error: \n {exception}".format(query=query, exception=exception))
+ 
+        raise
+ 
+uri = "neo4j+s://94610b1a.databases.neo4j.io"
+user = "neo4j"
+password = "DoJrS1qzpyDhAlHDnZGWcRltB8YFCvIyUKDizDk1UlA"
+ 
+print("test1") 
 driver = GraphDatabase.driver(uri, auth=(user, password))
  
- 
+print("test2")  
 with driver.session() as session:
-    session.execute_write(create_and_return_example, "Paulo", "Pessoa", "Agricultor")
-    session.execute_write(create_and_return_example, "Isaura", "Pessoa", "Agricultora")
-    session.execute_write(create_and_return_example, "José", "Pessoa", "Caminhoneiro")
-    session.execute_write(create_and_return_example, "Maiesse", "Pessoa", "Diarista")
-    session.execute_write(create_and_return_example, "Valmir", "Pessoa", "Vendedor")
-    session.execute_write(create_and_return_example, "Rossemi", "Pessoa", "Empilhadeirista")
-    session.execute_write(create_and_return_example, "Alexandre", "Pessoa", "Estudante")
-    session.execute_write(create_and_return_example, "Felipe", "Pessoa", "Engenheiro")
-    session.execute_write(create_and_return_example, "Fernando", "Pessoa", "Vendedor")
-    session.execute_write(create_and_return_example, "Zézinho", "Pessoa", "Caminhoneiro")
+    session.execute_write(get_vendedores)
  
-with driver.session() as session:
-    result = session.execute_read(get_amount_data)
-    print(result[0]['amount'])
+n = 4 
+while(n != 0):    
+    print("1 - Quem da família é Vendedor?")
+    print("2 - X pessoa é filho de quem?")
+    print("3 - Quem é irmão de quem?")
+    print("0 - Sair do programa")
+    n = input("Opção do menu?")
+
+    if n == 1:
+        with driver.session() as session:
+            session.execute_write(get_vendedores)    
+    elif n == 2:
+        filho = input("Nome do filho?")
+        with driver.session() as session:
+            session.execute_write(get_filho_de_quem, filho)  
+    elif n == 3:
+        with driver.session() as session:
+            session.execute_write(get_irmao_de)  
+
+
 driver.close()
