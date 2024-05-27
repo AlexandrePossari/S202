@@ -1,7 +1,7 @@
-from projetoLab.user_cli import MotoristaCLI
-from projetoLab.User_DAO import MotoristaDAO
+from projetoLab.user_cli import UserCLI
+from projetoLab.User_DAO import UserDAO
 
 if __name__ == '__main__':
-    motoristaDAO = MotoristaDAO('exav1', 'Motoristas')
-    cli = MotoristaCLI(motoristaDAO)
+    motoristaDAO = UserDAO('exav1', 'Motoristas')
+    cli = UserCLI(motoristaDAO)
     cli.run()

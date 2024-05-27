@@ -1,5 +1,4 @@
-from projetoLab.User_DAO import MotoristaDAO
-from Passageiro import Passageiro
+from projetoLab.User_DAO import UserDAO
 from projetoLab.User import User
 from projetoLab.Task import Corrida
 
@@ -23,8 +22,8 @@ class SimpleCLI:
                 print("Invalid command. Try again.")
 
 
-class MotoristaCLI(SimpleCLI):
-    def __init__(self, motoristaDAO: MotoristaDAO):
+class UserCLI(SimpleCLI):
+    def __init__(self, motoristaDAO: UserDAO):
         super().__init__()
         self.motoristaDAO = motoristaDAO
         self.add_command("create", self.create_motorista)
