@@ -1,126 +1,39 @@
-from projetoLab.User_DAO import UserDAO
-from projetoLab.User import User
-from projetoLab.Task import Corrida
-
-
-class SimpleCLI:
-    def __init__(self):
-        self.commands = {}
-
-    def add_command(self, name, function):
-        self.commands[name] = function
-
-    def run(self):
-        while True:
-            command = input("Enter a command: ")
-            if command == "quit":
-                print("Goodbye!")
-                break
-            elif command in self.commands:
-                self.commands[command]()
-            else:
-                print("Invalid command. Try again.")
+from simple_cli import SimpleCLI
+from User_DAO import UserDAO
+from User import User
+from Task_DAO import TaskDAO
+from task_cli import TaskCLI
 
 
 class UserCLI(SimpleCLI):
-    def __init__(self, motoristaDAO: UserDAO):
+    def __init__(self, user_Dao: UserDAO):
         super().__init__()
-        self.motoristaDAO = motoristaDAO
-        self.add_command("create", self.create_motorista)
-        self.add_command("read", self.read_motorista)
-        self.add_command("update", self.update_motorista)
-        self.add_command("delete", self.delete_motorista)
+        self.user_Dao = user_Dao
+        self.add_command("login", self.login)
+        self.add_command("register", self.register_user)
 
-    def create_motorista(self):
-        corridas = []
-        notas = 0
-        n_corridas = 0
+    def register_user(self):
+        nome = input("Nome: ")
+        email = input("Email: ")
+        senha = input("Senha: ")
 
-        while True:
-            n_corridas += 1
+        user = User(nome, email, senha)
 
-            print(f'Corrida: {n_corridas}')
+        self.user_Dao.create_user(user)
 
-            nota = int(input('\tNota: '))
-            distancia = float(input('\tDistancia: '))
-            valor = float(input('\tValor: '))
+    def login(self):
+        email = input("Email: ")
+        senha = input("Senha: ")
 
-            print('\tPassageiro')
-            nome_passageiro = str(input('\t\tNome: '))
-            documento_passageiro = str(input('\t\tDocumento: '))
+        user = self.user_Dao.read_user_by_email_pass(email, senha)
 
-            passageiro = Passageiro(nome_passageiro, documento_passageiro)
-
-            corrida = Corrida(nota, distancia, valor, passageiro)
-
-            corridas.append(corrida)
-            notas += nota
-
-            if input('Mais uma corrida? (S/N) ').lower() == 'n':
-                break
-
-        nota = int(notas / n_corridas)
-        motorista = User(corridas, nota)
-
-        self.motoristaDAO.create_motorista(motorista)
-
-    def read_motorista(self):
-        id = input("Id motorista: ")
-        motorista = self.motoristaDAO.read_motorista_by_id(id)
-        if motorista:
-            print(f'Nota: {motorista["nota"]}')
-            print('Corridas: ')
-            for corrida in motorista["corridas"]:
-                passageiro = corrida["passageiro"]
-
-                print(f'\tNota: {corrida["nota"]}')
-                print(f'\tDistancia: {corrida["distancia"]}')
-                print(f'\tValor: {corrida["valor"]}')
-
-                print('\tPassageiro: ')
-                print(f'\t\tNome: {passageiro["nome"]}')
-                print(f'\t\tDocumento: {passageiro["documento"]}')
-
-    def update_motorista(self):
-        id = input("Id motorista: ")
-
-        corridas = []
-        notas = 0
-        n_corridas = 0
-
-        while True:
-            n_corridas += 1
-
-            print(f'Corrida: {n_corridas}')
-
-            nota = int(input('\tNota: '))
-            distancia = float(input('\tDistancia: '))
-            valor = float(input('\tValor: '))
-
-            print('\tPassageiro')
-            nome_passageiro = str(input('\t\tNome: '))
-            documento_passageiro = str(input('\t\tDocumento: '))
-
-            passageiro = Passageiro(nome_passageiro, documento_passageiro)
-
-            corrida = Corrida(nota, distancia, valor, passageiro)
-
-            corridas.append(corrida)
-            notas += nota
-
-            if input('Mais uma corrida? (S/N) ').lower == 'n':
-                break
-
-        nota = int(notas / n_corridas)
-        motorista = User(corridas, nota)
-
-        self.motoristaDAO.update_motorista(id, motorista)
-
-    def delete_motorista(self):
-        id = input("Id motorista: ")
-        self.motoristaDAO.delete_motorista(id)
+        if not user:
+            print("Email ou senha incorreto")
+            return
+        
+        task_dao = TaskDAO('Projeto', 'Tasks')
+        task_cli = TaskCLI(task_dao)
 
     def run(self):
         print("Bem-vindo ao CLI do motorista!")
-        print("Comandos disponiveis: create, read, update, delete, quit")
         super().run()

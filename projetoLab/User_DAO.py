@@ -1,7 +1,7 @@
 from database import Database
 from bson.objectid import ObjectId
 
-from projetoLab.User import User
+from User import User
 
 
 class UserDAO:
@@ -15,6 +15,14 @@ class UserDAO:
             return res.inserted_id
         except Exception as e:
             print(f"Ocorreu um erro na criação do User: {e}")
+            return None
+
+    def read_user_by_email_pass(self, email: str, password: str):
+        try:
+            res = self.db.collection.find_one({"email": email, "senha": password})
+            return res
+        except Exception as e:
+            print(f"Ocorreu um erro buscando user: {e}")
             return None
 
     def read_user_by_id(self, id: str):

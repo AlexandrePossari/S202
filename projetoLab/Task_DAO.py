@@ -1,7 +1,7 @@
 from database import Database
 from bson.objectid import ObjectId
 
-from projetoLab.Task import Task
+from Task import Task
 
 
 class TaskDAO:
