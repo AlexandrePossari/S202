@@ -25,14 +25,17 @@ class UserCLI(SimpleCLI):
         email = input("Email: ")
         senha = input("Senha: ")
 
-        user = self.user_Dao.read_user_by_email_pass(email, senha)
+        res = self.user_Dao.read_user_by_email_pass(email, senha)
 
-        if not user:
+        if not res:
             print("Email ou senha incorreto")
             return
         
+        user = User(res["nome"], res["email"], res["senha"])
+
         task_dao = TaskDAO('Projeto', 'Tasks')
-        task_cli = TaskCLI(task_dao)
+        task_cli = TaskCLI(task_dao, user)
+        task_cli.run()
 
     def run(self):
         print("Bem-vindo ao CLI do motorista!")

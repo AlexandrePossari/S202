@@ -24,7 +24,22 @@ class TaskDAO:
         except Exception as e:
             print(f"Ocorreu um erro buscando task: {e}")
             return None
-
+        
+    def readAll(self, user):
+        try:
+            res = self.db.collection.find({"user": user.get_dict()})
+            return res
+        except Exception as e:
+            print(f"Ocorreu um erro buscando task: {e}")
+            return None
+        
+    def get_by_name(self, titulo,  user):
+        try:
+            res = self.db.collection.find_one({"titulo": titulo, "user": user.get_dict()})
+            return res
+        except Exception as e:
+            print(f"Ocorreu um erro buscando task: {e}")
+            return None
 
     def update_task(self, id: str, task: Task):
         try:
