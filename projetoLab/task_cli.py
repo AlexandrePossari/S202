@@ -43,7 +43,13 @@ class TaskCLI(SimpleCLI):
         novo_titulo = input("Titulo: ")
         descricao = input("Descricao: ")
         data = input("Data: ")
-        done = input("Done: ")
+        done = ""
+        while done != "False" and done != "True":
+            done = input("Done(True/False): ")
+
+        done = True if done == "True" else False
+
+
 
         res = self.task_dao.get_by_name(titulo, self.user)
 
