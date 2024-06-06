@@ -1,0 +1,24 @@
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'email',
+      'nome',
+      'senha'
+    ],
+    properties: {
+      email: {
+        bsonType: 'string',
+        description: 'deve ser uma string'
+      },
+      nome: {
+        bsonType: 'string',
+        description: 'deve ser uma string'
+      },
+      senha: {
+        bsonType: 'string',
+        description: 'deve ser uma string'
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "bsonType": "object",
+  "required": ["_id", "data", "descricao", "done", "titulo", "user"],
+  "properties": {
+    "_id": {
+      "bsonType": "objectId",
+      "description": "Unique identifier for the document"
+    },
+    "data": {
+      "bsonType": "string",
+      "description": "Data field"
+    },
+    "descricao": {
+      "bsonType": "string",
+      "description": "Description field"
+    },
+    "done": {
+      "bsonType": "bool",
+      "description": "Done status"
+    },
+    "titulo": {
+      "bsonType": "string",
+      "description": "Title field"
+    },
+    "user": {
+      "bsonType": "object",
+      "required": ["email", "nome", "senha"],
+      "properties": {
+        "email": {
+          "bsonType": "string",
+          "description": "User email"
+        },
+        "nome": {
+          "bsonType": "string",
+          "description": "User name"
+        },
+        "senha": {
+          "bsonType": "string",
+          "description": "User password"
+        }
+      },
+      "description": "User information"
+    }
+  }
+}

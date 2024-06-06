@@ -1,7 +1,5 @@
 import pymongo  # pip install pymongo
 
-from dataset import dataset
-
 
 class Database:
     def __init__(self, database, collection):
@@ -22,8 +20,7 @@ class Database:
 
     def reset_database(self):
         try:
-            self.db.drop_collection(self.collection)
-            self.collection.insert_many(dataset)
+            self.db.drop_collection(self.collection)      
             print("Banco de dados resetado com sucesso!")
         except Exception as e:
             print(e)
