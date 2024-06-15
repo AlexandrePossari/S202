@@ -38,5 +38,5 @@ class UserCLI(SimpleCLI):
         task_cli.run()
 
     def run(self):
-        print("Bem-vindo ao CLI do motorista!")
+        print("Bem-vindo ao CLI do usuário!")
         super().run()
